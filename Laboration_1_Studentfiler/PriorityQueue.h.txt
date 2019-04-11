@@ -91,12 +91,9 @@ void PriorityQueue<T>::dequeue(){
 
 template <typename T>
 T PriorityQueue<T>::peek() const{
-    try{
-        if(this->isEmpty()) throw "ERROR: The Queue is empty";
+    if(this->isEmpty()) throw "ERROR: The Queue is empty";
         return first->value;
-    }catch(const std::exception &e){
-        std::cerr<<e.what()<<"\n";
-    }
+   
 }
 
 template <typename T>
