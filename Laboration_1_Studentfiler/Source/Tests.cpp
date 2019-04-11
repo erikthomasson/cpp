@@ -1,4 +1,4 @@
-#include "/home/erik/c++/Laboration_1_Studentfiler/Includes/TestPriorityQueue.hpp"
+#include "../Includes/TestPriorityQueue.h"
 #include <string>
 
 int main(int argc, const char *argv[])
