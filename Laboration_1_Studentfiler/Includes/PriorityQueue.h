@@ -16,20 +16,15 @@ class PriorityQueue{
         Node *first = nullptr, *back= nullptr;
     public:
         PriorityQueue() = default;
-        //~PriorityQueue();
+        ~PriorityQueue();
         void enqueue(const T &element);
         void dequeue();
-        T peek();
-        size_t size();
-        bool isEmpty();
+        T peek() const;
+        size_t size() const;
+        bool isEmpty() const;
 
 };
-/*
-template <typename T>
-PriorityQueue<T>::PriorityQueue(){} = default;
-*/
 
-/*
 template <typename T>
 PriorityQueue<T>::~PriorityQueue(){
     Node *deleteNodes = first->nextNode;
@@ -41,7 +36,7 @@ PriorityQueue<T>::~PriorityQueue(){
     }
     delete first;
 }
-*/
+
 template <typename T>
 void PriorityQueue<T>::enqueue(const T &element){
     Node *newNode = new Node;
@@ -95,9 +90,9 @@ void PriorityQueue<T>::dequeue(){
 }
 
 template <typename T>
-T PriorityQueue<T>::peek(){
+T PriorityQueue<T>::peek() const{
     try{
-        if(cap<1) throw "ERROR: The Queue is empty";
+        if(this->isEmpty()) throw "ERROR: The Queue is empty";
         return first->value;
     }catch(const std::exception &e){
         std::cerr<<e.what()<<"\n";
@@ -105,11 +100,11 @@ T PriorityQueue<T>::peek(){
 }
 
 template <typename T>
-size_t PriorityQueue<T>::size(){
+size_t PriorityQueue<T>::size() const{
     return this->cap;
 }
 
 template <typename T>
-bool PriorityQueue<T>::isEmpty(){
+bool PriorityQueue<T>::isEmpty() const{
     return this->cap == 0;
 }
