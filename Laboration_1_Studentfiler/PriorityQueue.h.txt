@@ -1,0 +1,108 @@
+#include <memory>
+#include <cstdlib>
+#include <exception>
+#include <utility>
+#include <iterator>
+
+
+template <typename T>
+class PriorityQueue{
+    private:
+        size_t size=0;
+        struct Node{
+            T value;
+            Node *nextNode = nullptr;
+            Node *prevNode = nullptr;
+        };
+        Node *first, *back;
+    public:
+        PriorityQueue() = default;
+        //~PriorityQueue();
+        void enqueue(T element);
+        void dequeue();
+        T peek();
+        size_t size();
+        bool isEmpty();
+
+};
+/*
+template <typename T>
+PriorityQueue<T>::PriorityQueue(){} = default;
+/*
+/*
+template <typename T>
+PriorityQueue<T>::~PriorityQueue(){
+    Node *deleteNodes = first->nextNode;
+    while (deleteNodes->nextNode != nullptr)
+    {
+        delete first;
+        first = deleteNodes;
+        deleteNodes = deleteNodes->nextNode;
+    }
+    delete first;
+}
+*/
+template <typename T>
+void PriorityQueue<T>::enqueue(T element){
+    Node *newNode = new Node;
+    newNode->value = element;
+    Node *temp= first;
+    if(newNode->value >= back->value){
+        newNode->prevNode = back;
+        back->nextNode = newNode;
+        back = newNode;
+    }
+    else if (newNode->value < first->value)
+    {
+        temp->prevNode = newNode;
+        newNode->nextNode = temp;
+        first=newNode;
+    }
+    else{
+        while(temp != back){
+            if(newNode->value >= temp->value){
+                temp->prevNode->nextNode = newNode;
+                newNode->prevNode= temp->prevNode;
+                newNode->nextNode = temp;
+                temp->prevNode = newNode;
+                break;
+            }
+            temp = temp->nextNode;
+        }
+    
+    }
+    this->size++;
+}
+
+template <typename T>
+void PriorityQueue<T>::dequeue(){
+    try{
+    if(size<1) throw "ERROR: The Queue is empty";
+    Node *temp = first->nextNode;
+    delete first;
+    first = temp;
+    this->size--;
+    }catch (std::string e){
+        std::cout<<e<<std::endl;
+    }
+}
+
+template <typename T>
+T PriorityQueue<T>::peek(){
+    try{
+        if(size<1) throw "ERROR: The Queue is empty";
+        return first->value;
+    }catch(std::string e){
+        std::cout<<e<<std::endl;
+    }
+}
+
+template <typename T>
+size_t PriorityQueue<T>::size(){
+    return this->size;
+}
+
+template <typename T>
+bool PriorityQueue<T>::isEmpty(){
+    return this->size == 0;
+}
