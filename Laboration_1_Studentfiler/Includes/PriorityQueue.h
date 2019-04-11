@@ -27,6 +27,7 @@ class PriorityQueue{
 
 template <typename T>
 PriorityQueue<T>::~PriorityQueue(){
+    if(first != nullptr){
     Node *deleteNodes = first->nextNode;
     while (deleteNodes->nextNode != nullptr)
     {
@@ -35,6 +36,7 @@ PriorityQueue<T>::~PriorityQueue(){
         deleteNodes = deleteNodes->nextNode;
     }
     delete first;
+    }
 }
 
 template <typename T>
