@@ -7,6 +7,7 @@
 
 template <typename T>
 class PriorityQueue{
+    //A template Priority Queue class by Erik Thomasson. Priority on the least variabe (1<2 or a<b ...)
     private:
         size_t cap=0;
         struct Node{
@@ -73,7 +74,7 @@ void PriorityQueue<T>::enqueue(const T &element){
         }
 
     }
-    ++cap;
+    cap++;
 }
 
 template <typename T>
@@ -85,7 +86,7 @@ void PriorityQueue<T>::dequeue(){
     Node *temp = first->nextNode;
     delete first;
     first = temp;
-    this->cap--;
+    cap--;
     }catch (const std::exception &e){
         std::cerr<<e.what()<<"\n";
     }
