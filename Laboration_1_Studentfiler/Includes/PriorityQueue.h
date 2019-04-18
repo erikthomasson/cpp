@@ -7,7 +7,7 @@
 
 template <typename T>
 class PriorityQueue{
-    //A template Priority Queue class by Erik Thomasson. Priority on the least variabe (1<2 or a<b ...)
+    //A template Priority Queue class by Erik Thomasson. Priority on the least valuable variable (1<2 or a<b ...)
     private:
         size_t cap=0;
         struct Node{
@@ -42,6 +42,7 @@ PriorityQueue<T>::~PriorityQueue(){
 
 template <typename T>
 void PriorityQueue<T>::enqueue(const T &element){
+    //Adds a new element in the queue
     Node *newNode = new Node;
     newNode->value = element;
     newNode->nextNode = nullptr;
@@ -79,6 +80,7 @@ void PriorityQueue<T>::enqueue(const T &element){
 
 template <typename T>
 void PriorityQueue<T>::dequeue(){
+    //dequeue the first element in the queue
     try{
     if(cap < 1){
         throw "ERROR: The Queue is empty";
@@ -94,6 +96,7 @@ void PriorityQueue<T>::dequeue(){
 
 template <typename T>
 T PriorityQueue<T>::peek() const{
+    //Returns the first element in the queue
     if(this->isEmpty()) throw "ERROR: The Queue is empty";
         return first->value;
    
@@ -101,10 +104,13 @@ T PriorityQueue<T>::peek() const{
 
 template <typename T>
 size_t PriorityQueue<T>::size() const{
+    //Function that returns the size of the queue
     return this->cap;
 }
 
 template <typename T>
 bool PriorityQueue<T>::isEmpty() const{
+    //Function that return if the queue is empty or not
     return this->cap == 0;
 }
+                                    
