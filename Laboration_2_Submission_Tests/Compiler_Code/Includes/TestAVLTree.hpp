@@ -17,6 +17,7 @@
 #include <random>
 #include <iomanip>
 #include <chrono>
+#include <limits>
 namespace UnitTests::AVLTREE
 {
 
@@ -310,10 +311,10 @@ bool UnitTestGetTreeHeight()
         
         T tree;
 
-        std::cout << "\t\tThis test will try to get the height of an empty tree.\n\t\t\tExpected value: 0" << std::endl;
+        std::cout << "\t\tThis test will try to get the height of an empty tree.\n\t\t\tExpected value: -1" << std::endl;
         size_t height = tree.getTreeHeight();
-        std::cout << "\t\t\tReturned value: " << height << std::endl;
-        if(height)
+        std::cout << "\t\t\tReturned value: " << (height == std::numeric_limits<size_t>::max() ? std::string("-1") : std::to_string(height)) << std::endl;
+        if(height != std::numeric_limits<size_t>::max())
         {
             std::cout << "\t\t\tAVLTree::getTreeHeight did not return expected value." << std::endl;
             std::cout << "\t\tAVLTree::getTreeHeight not working as expected." << std::endl;
@@ -330,10 +331,10 @@ bool UnitTestGetTreeHeight()
                 tree.insert(element);
             }
             std::cout << "\t\t\tSet inserted into the AVLTree. This set should have resulted in multiple rotations. Calling getTreeHeight." << std::endl;
-            std::cout << "\t\t\t\tExpected value: 3" << std::endl;
+            std::cout << "\t\t\t\tExpected value: 2" << std::endl;
             height = tree.getTreeHeight();
             std::cout << "\t\t\t\tReturned value: " << height << std::endl;
-            if(height != 3)
+            if(height != 2)
             {
                 std::cout << "\t\t\tAVLTree::getTreeHeight did not return expected value, see page 165-167 for example." << std::endl;
                 std::cout << "\t\tAVLTree::getTreeHeight not working as expected." << std::endl;
@@ -348,10 +349,10 @@ bool UnitTestGetTreeHeight()
                 tree.insert(element);
             }
             std::cout << "\t\t\tSet inserted into the AVLTree. This set should have resulted in multiple double rotations. Calling getTreeHeight." << std::endl;
-            std::cout << "\t\t\t\tExpected value: 5" << std::endl;
+            std::cout << "\t\t\t\tExpected value: 4" << std::endl;
             height = tree.getTreeHeight();
             std::cout << "\t\t\t\tReturned value: " << height << std::endl;
-            if(height != 5)
+            if(height != 4)
             {
                 std::cout << "\t\t\tAVLTree::getTreeHeight did not return expected value, see page 167-171 for example." << std::endl;
                 std::cout << "\t\tAVLTree::getTreeHeight not working as expected." << std::endl;
@@ -844,9 +845,9 @@ bool UnitTestRemove()
             if constexpr(AVLTree_HasgetTreeHeightFunction)
             {
                 std::cout << "\t\t\tControlling that all elements have been properly removed." << std::endl;
-                if(tree.getTreeHeight())
+                if(tree.getTreeHeight() != std::numeric_limits<size_t>::max())
                 {
-                    std::cout << "\t\t\tAVLTree::getTreeHeight did not return 0 on tree that is expected to be empty. " << std::endl;
+                    std::cout << "\t\t\tAVLTree::getTreeHeight did not return -1 on tree that is expected to be empty. " << std::endl;
                     if constexpr (AVLTree_HasinOrderWalkFunction)
                     {
                         walkResult = tree.inOrderWalk();
@@ -992,7 +993,7 @@ bool UnitTestStressTest()
         std::cout << "\t\t\tThis will be done until the tree is empty." << std::endl;
         auto it = randomNumbs.begin();
         unsigned short counter = 0;
-        while(tree.getTreeHeight())
+        while(tree.getTreeHeight() != std::numeric_limits<size_t>::max())
         {
             tree.remove(*it);
             ++counter;
