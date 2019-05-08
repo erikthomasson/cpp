@@ -1,0 +1,26 @@
+DIRECTED
+First Town
+Second Town
+Third Town
+Fourth Town
+Good City
+Great City
+Super City
+Small Village
+Tiny Village
+Metropolis
+
+First Town	Second Town	2
+Second Town	Third Town	2
+Third Town	Fourth Town	2
+Fourth Town	Tiny Village	4
+Great City	Good City	4
+Great City	Fourth Town	1
+Great City	Super City	3
+Good City	Great City	4
+Super City	Metropolis	1
+Small Village	Tiny Village	1
+Tiny Village	Super City	2
+Metropolis	First Town	7
+Metropolis	Good City	3
+Metropolis	Small Village	10

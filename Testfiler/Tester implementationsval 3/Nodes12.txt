@@ -1,0 +1,25 @@
+UNDIRECTED
+a
+b
+c
+d
+e
+f
+g
+h
+i
+
+a	b	5
+a	d	4
+b	c	5
+b	e	3
+b	f	3
+c	g	4
+d	e	2
+d	h	4
+e	f	2
+e	h	2
+f	g	2
+f	i	2
+g	i	4
+h	i	2
