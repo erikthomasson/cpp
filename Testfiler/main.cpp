@@ -164,10 +164,11 @@ void write2File(const std::map<std::string, Vertex>& allVertex, const int& dista
 int main(int argc , char* path[]){
     //path[1] == sökvägen till existerande fil
     //"First Town-Second Town" == billigaste rutten från A - B
-    //path[1] = "/home/erik/c++/cpp/Testfiler/Tester implementationsval 1/Nodes1.txt";
-    //path[2] = "First Town-Second Town";
+    
+    std::string paths = "/home/erik/c++/cpp/Testfiler/Tester implementationsval 1/Nodes1.txt";
+    std::string str = "First Town-Second Town";
     std::cout<<"hej"<<std::endl;
-    std::string str="First Town-Second Town", startV,endV;
+    std::string startV,endV;
     bool startVOrEndV=false;
     for(int i=0;i<str.size();i++){
         if(str[i]=='-'){
@@ -183,7 +184,7 @@ int main(int argc , char* path[]){
     std::ofstream outFile;
     std::map<std::string,Vertex> allVertex;
     
-    allVertex=readFile("/home/erik/c++/cpp/Testfiler/Tester implementationsval 1/Nodes1.txt");
+    allVertex=readFile(paths);
     std::cout<<"readFile done"<<std::endl;
     dijkstra(allVertex,startV);
     std::cout<<"dijkstra done"<<std::endl;
