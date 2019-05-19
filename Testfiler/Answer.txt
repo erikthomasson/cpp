@@ -1,0 +1,3 @@
+0
+Distance from start to end: 2
+All the stations on the way: First Town -> Second Town

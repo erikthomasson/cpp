@@ -1,4 +1,4 @@
 template <typename T>
-arr[] mergeSort(T arr[]){
-
+T mergeSort(T arr[]){
+    
 }

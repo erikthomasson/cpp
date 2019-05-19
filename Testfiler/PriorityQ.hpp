@@ -22,7 +22,7 @@ public:
     ~PriorityQueue();
     void enqueue(const T &element);
     void dequeue();
-    T peek() const;
+    T& peek() const;
     size_t size() const;
     bool isEmpty() const;
 };
@@ -70,8 +70,6 @@ void PriorityQueue<T>::enqueue(const T &element)
         }
         else
         {
-            std::cout << temp->nextNode->value << std::endl;
-            std::cout << newNode->value << std::endl;
 
             while (temp->nextNode->value < newNode->value)
             {
@@ -100,7 +98,7 @@ void PriorityQueue<T>::dequeue()
 }
 
 template <typename T>
-T PriorityQueue<T>::peek() const
+T& PriorityQueue<T>::peek() const
 {
     //Returns the first element in the queue
     if (this->isEmpty())
