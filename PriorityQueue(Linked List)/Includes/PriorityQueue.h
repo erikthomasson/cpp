@@ -58,7 +58,7 @@ void PriorityQueue<T>::enqueue(const T &element)
     else
     {
         Node *temp = first;
-        if (back->value <  newNode->value)
+        if (back->value < newNode->value)
         {
             back->nextNode = newNode;
             back = newNode;
@@ -70,9 +70,6 @@ void PriorityQueue<T>::enqueue(const T &element)
         }
         else
         {
-            std::cout << temp->nextNode->value << std::endl;
-            std::cout << newNode->value << std::endl;
-
             while (temp->nextNode->value < newNode->value)
             {
                 temp = temp->nextNode;
