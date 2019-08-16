@@ -1,8 +1,9 @@
 //Shortest path from a node to another node
+#include "PriorityQ.hpp"
+
 #include <fstream>
 #include <string>
 #include <iostream>
-#include "PriorityQ.hpp"
 #include <vector>
 #include <map>
 #include <limits.h>
@@ -14,6 +15,7 @@ struct Vertex
     int distance;
     Vertex *path;
     std::string name;
+
     bool operator<(Vertex &s)
     {
         if (this->distance < s.distance)
@@ -27,7 +29,7 @@ struct Vertex
 
 void printPath(const Vertex &v, std::string &shortestPath)
 {
-    //take a Vertex and a string reference. When the function is done the text string was in the argument list has changed to the path from start Vertex to the end Vertex
+    //take a Vertex and a string reference. When the function is done the text string which was in the argument list will change to the distance of the path from start Vertex to the end Vertex
     if (v.path != nullptr)
     {
         printPath(*v.path, shortestPath);
@@ -37,62 +39,91 @@ void printPath(const Vertex &v, std::string &shortestPath)
 }
 void dijkstra(std::map<std::string, Vertex> &allVertex, std::string &startV)
 {
-    //set the closest distance from start Vector to any other Vector
-    PriorityQueue<Vertex> q;
+    std::cout<<startV;
+    //Set the closest distance from start Vector to any other Vector
+    std::pair<int, std::string> par;
+    PriorityQueue<std::pair<int, std::string>> q;
     allVertex[startV].distance = 0;
-
+    
     for (auto it = allVertex.begin(); it != allVertex.end(); it++)
     {
-        q.enqueue(it->second);
+        std::cout<<it->first<<it->second.distance<<std::endl;
+        par.first = it->second.distance;
+        par.second = it->first;
+        q.enqueue(par);
     }
+
     Vertex *vertexP;
+    std::cout<<"hej"<<std::endl;
     while (!q.isEmpty())
     {
-        vertexP = &q.peek();
+        par = q.peek();
         q.dequeue();
-
-        for (auto it = vertexP->adjacent.begin(); it != vertexP->adjacent.end(); it++)
+        std::cout<<par.first<< par.second<<std::endl;
+        /*for (auto it = vertexP->adjacent.begin(); it != vertexP->adjacent.end(); it++){
+            std::cout<<it->first->name<< " ";
+        }
+        */
+        for (auto it = allVertex[par.second].adjacent.begin(); it != allVertex[par.second].adjacent.end(); it++)
         {
-            int dist = vertexP->distance + it->second;
-
-            if (dist < it->first->distance && dist >= 0)
+            std::cout<<it->first->name<< " "<< par.first + it->second <<" "<< allVertex[it->first->name].distance<<std::endl; //C 3 213123414325
+            int dist = par.first + it->second;
+            //std::cout<<dist <<" "<< allVertex[it->first->name].distance <<std::endl;
+            if (allVertex[it->first->name].distance > dist && dist >=0) 
             {
-                it->first->distance = dist;
-
-                it->first->path = &allVertex[vertexP->name];
-                q.enqueue(*it->first);
+                std::cout<<"bra"<<std::endl;
+                allVertex[it->first->name].distance = dist;
+                
+                it->first->path = &allVertex[par.second];
+                
+                
+                //std::cout<<par.first<<par.second<<std::endl;
+                q.enqueue(make_pair(allVertex[it->first->name].distance, it->first->name ));
+                
             }
         }
+        std::cout<<"done"<<"\n"<<std::endl;
     }
 }
 
 std::map<std::string, Vertex> readFile(std::string path2File)
 {
     //reads the file that is given in the argument list from running the program
+    std::cout<<"readfile"<<std::endl;
+
     std::ifstream inFile;
     std::map<std::string, Vertex> allVertex;
+    
     inFile.open(path2File);
-
+    std::cout<<path2File<<std::endl;
+    
     if (inFile.is_open())
     {
+        std::cout<<"tjo"<<std::endl;
         bool isDirected, aVertexLine = true;
         std::string val, val2, val3;
         std::getline(inFile, val);
-        if (val == "DIRECTED\r")
+        std::cout<<val<<std::endl;
+        if (val == "DIRECTED"){
+            std::cout<<"sant"<<std::endl;
             isDirected = true;
+        }
         else
             isDirected = false;
 
         while (!inFile.eof())
         {
-            std::getline(inFile, val, '\r');
-            std::getline(inFile, val2);
+            std::getline(inFile, val);
+            
+            std::cout<< val << std::endl;
             if (val == "")
             {
+                std::cout<< "okej" << std::endl;
                 aVertexLine = false;
             }
             else if (aVertexLine == true)
             {
+                std::cout<< "okej2" << std::endl;   
                 Vertex newVertex;
                 newVertex.distance = INT_MAX;
                 newVertex.path = nullptr;
@@ -101,7 +132,8 @@ std::map<std::string, Vertex> readFile(std::string path2File)
             }
             else
             {
-
+                std::cout<< "okej3" << std::endl;
+                if(val == "A\tJ\t3") std::cout<<"readfile"<<std::endl;
                 std::string arr[3];
                 int count = 0;
                 for (unsigned int i = 0; i < val.size(); i++)
@@ -124,15 +156,17 @@ std::map<std::string, Vertex> readFile(std::string path2File)
                         arr[2] += val[i];
                     }
                 }
+                std::cout<< arr[0] << "_"<<arr[1] <<"_"<<arr[2] << std::endl;
                 Vertex *vertexP;
                 vertexP = &allVertex[arr[1]];
                 allVertex[arr[0]].adjacent[vertexP] = std::stoi(arr[2]);
-                if (isDirected)
+                if (!isDirected)
                 {
                     vertexP = &allVertex[arr[0]];
                     allVertex[arr[1]].adjacent[vertexP] = std::stoi(arr[2]);
                 }
             }
+            
         }
         return allVertex;
     }
@@ -145,7 +179,7 @@ void write2File(const int &distance, const std::string &shortestPath)
 {
     //Writes the distance from start node to end node and also writes which nodes that is on the way to an text file
     std::ofstream outFile;
-    outFile.open("Answer.txt");
+    outFile.open("../Answer.txt");
     outFile << "0"
             << "\n";
     outFile << "Distance from start to end: ";
@@ -156,16 +190,16 @@ void write2File(const int &distance, const std::string &shortestPath)
 
 int main( int argc, char *path[])
 {
-    std::cout <<"Input file: " << path[1] << std::endl;
-    std::cout <<"[Start station]-[End station]: " << path[2] << std::endl;
+    std::cout <<"Entered file: " << "path[1]" << std::endl;
+    std::cout <<"[Start station]-[End station]: " << "path[2]" << std::endl;
     std::cout <<"Output file: ./Answer.txt" << std::endl;
 
-    std::string start2end = path[2];
-    std::string startV, endV, filepath = path[1];
+    std::string start2end = "A-E";
+    std::string startV, endV, filepath = "../Tester implementationsval 1/Nodes2.txt";
     bool startVOrEndV = false;
     for (unsigned int i = 0; i < start2end.size(); i++)
     {
-        if (path[2][i] == '-')
+        if (start2end[i] == '-')
         {
             startVOrEndV = true;
             continue;
@@ -179,9 +213,29 @@ int main( int argc, char *path[])
     std::ifstream inFile;
     std::ofstream outFile;
     std::map<std::string, Vertex> allVertex;
-
+    std::cout<< startV<< endV;
     allVertex = readFile(filepath.c_str());
+    
+    for( auto it = allVertex.begin(); it != allVertex.end(); it++){
+        std::cout<<it->first<< allVertex[it->first].distance << " ";
+        for (auto iter = allVertex[it->first].adjacent.begin(); iter != allVertex[it->first].adjacent.end(); iter++){
+            std::cout<< iter->first->name<< iter->second <<" ";
+        }
+        std::cout<<std::endl;
+    }
+    
+    std::cout<<"yoo"<<std::endl;
     dijkstra(allVertex, startV);
+    for( auto it = allVertex.begin(); it != allVertex.end(); it++){
+        std::cout<<it->first<< allVertex[it->first].distance << " ";
+        for (auto iter = allVertex[it->first].adjacent.begin(); iter != allVertex[it->first].adjacent.end(); iter++){
+            std::cout<< iter->first->name<< iter->second <<" ";
+        }
+        std::cout<<std::endl;
+    }
+    std::cout<<"sup"<<std::endl;
+    std::cout<<shortestPath<<std::endl;
     printPath(allVertex[endV], shortestPath);
+    std::cout<<shortestPath<<std::endl;
     write2File(allVertex[endV].distance, shortestPath);
 }

@@ -10,9 +10,9 @@ Small Village
 Tiny Village
 Metropolis
 
-First Town	Second Town	2
-Second Town	Third Town	2
-Third Town	Fourth Town	2
+First Town	Second Town 2
+Second Town	Third Town  2
+Third Town	Fourth Town 2
 Fourth Town	Tiny Village	4
 Great City	Good City	4
 Great City	Fourth Town	1
