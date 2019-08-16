@@ -2,43 +2,28 @@ ifeq ($(OS), Windows_NT)
 	INCLUDES := Includes\\
 	BUILD := Build\\
 	BIN := Bin\\
-	EXECUTABLE := $(BIN)AssignmentC.exe
+	EXECUTABLE := $(BIN)AssignmentD.exe
 	SOURCE := Source\\
 	DELETE := del
 else
 	INCLUDES := Includes/
 	BUILD := Build/
 	BIN := Bin/
-	EXECUTABLE := $(BIN)/AssignmentD
+	EXECUTABLE := $(BIN)AssignmentD
 	SOURCE := Source/
 	DELETE := rm
 endif
 
+CPP := g++
+CPPFLAGS := -std=c++17 
 
-FLAGSO := g++ -g -c -std=c++11 -Wall -Wextra -Wpedantic
-FLAGSL := g++ -g -std=c++11 -Wall -Wextra -Wpedantic
+all: $(EXECUTABLE)
 
-all: $(BUILD) $(BIN) $(EXECUTABLE)
+$(EXECUTABLE): $(BUILD)main.o
+	$(CPP) $(CPPFLAGS) $(BUILD)main.o -o $(EXECUTABLE)
 
-$(EXECUTABLE): $(BUILD)Main.o
-	$(FLAGSL) $(BUILD)Main.o -o $(EXECUTABLE)
-
-$(BUILD):
-ifeq ($(OS), Windows_NT)
-	-@ if NOT EXIST $(BUILD) mkdir $(BUILD)
-else
-	if [! -d $(BUILD)]; then mkdir $(BUILD)
-endif
-$(BIN):
-ifeq ($(OS), Windows_NT)
-	-@ if NOT EXIST $(BIN) mkdir $(BIN)
-else
-	if [! -d $(BIN)]; then mkdir $(BIN)
-endif
-
-$(BUILD)Main.o: $(SOURCE)Main.cpp
-	$(FLAGSO) $(SOURCE)Main.cpp -o $(BUILD)Main.o
+$(BUILD)main.o: $(SOURCE)main.cpp
+	$(CPP) $(CPPFLAGS) -c $(SOURCE)main.cpp -I$(INCLUDES) -o $(BUILD)main.o
 
 clean:
-	-$(DELETE) $(BUILD)Main.o $(EXECUTABLE)
-
+	-$(DELETE) $(EXECUTABLE) $(BUILD)main.o

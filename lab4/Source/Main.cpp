@@ -16,7 +16,7 @@ int main()
     std::random_device rd;
     std::mt19937 engine(rd());
     std::uniform_int_distribution<unsigned int> distribution(0, 10000);
-    std::ifstream wordsFile("Bin/Lab4_TestFile");
+    std::ifstream wordsFile("Lab4_TestFile");
     int count = 0;
     SteadyClockTimePoint tot_IMPL_Linkedlist, tot_IMPL_V, IMPL_LinkedList100, IMPL_V100, push_IMPL_LinkedList, push_IMPL_V;
     SteadyClockTimePoint tot_IMPL_Linkedlistint, tot_IMPL_Vint, IMPL_LinkedList100int, IMPL_V100int, push_IMPL_LinkedListint, push_IMPL_Vint;

@@ -2,28 +2,28 @@ ifeq ($(OS), Windows_NT)
 	INCLUDES := Includes\\
 	BUILD := Build\\
 	BIN := Bin\\
-	EXECUTABLE := $(BIN)PriorityQueue.exe
+	EXECUTABLE := $(BIN)dijkstra.exe
 	SOURCE := Source\\
 	DELETE := del
 else
 	INCLUDES := Includes/
 	BUILD := Build/
 	BIN := Bin/
-	EXECUTABLE := $(BIN)PriorityQueue
+	EXECUTABLE := $(BIN)dijkstra
 	SOURCE := Source/
 	DELETE := rm
 endif
 
 CPP := g++
-CPPFLAGS := -std=c++17 -Wall -Wextra -Wpedantic -pedantic-errors -O0 -Werror
+CPPFLAGS := -std=c++17 
 
 all: $(EXECUTABLE)
 
-$(EXECUTABLE): $(BUILD)Tests.o
-	$(CPP) $(CPPFLAGS) $(BUILD)Tests.o -o $(EXECUTABLE)
+$(EXECUTABLE): $(BUILD)main.o
+	$(CPP) $(CPPFLAGS) $(BUILD)main.o -o $(EXECUTABLE)
 
-$(BUILD)Tests.o: $(SOURCE)Tests.cpp $(INCLUDES)TestingBase.hpp $(INCLUDES)TestPriorityQueue.hpp
-	$(CPP) $(CPPFLAGS) -c $(SOURCE)Tests.cpp -I$(INCLUDES) -o $(BUILD)Tests.o
+$(BUILD)main.o: $(SOURCE)main.cpp $(INCLUDES)PriorityQ.hpp
+	$(CPP) $(CPPFLAGS) -c $(SOURCE)main.cpp -I$(INCLUDES) -o $(BUILD)main.o
 
 clean:
-	-$(DELETE) $(EXECUTABLE) $(BUILD)Tests.o
+	-$(DELETE) $(EXECUTABLE) $(BUILD)main.o
