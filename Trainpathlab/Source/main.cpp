@@ -194,8 +194,8 @@ int main( int argc, char *path[])
     std::cout <<"[Start station]-[End station]: " << "path[2]" << std::endl;
     std::cout <<"Output file: ./Answer.txt" << std::endl;
 
-    std::string start2end = "A-E";
-    std::string startV, endV, filepath = "../Tester implementationsval 1/Nodes2.txt";
+    std::string start2end = "a-i";
+    std::string startV, endV, filepath = "../Tester implementationsval 1/Nodes9.txt";
     bool startVOrEndV = false;
     for (unsigned int i = 0; i < start2end.size(); i++)
     {

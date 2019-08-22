@@ -1,0 +1,3 @@
+0
+Distance from start to end: 12
+All the stations on the way: a -> l -> k -> j -> i
